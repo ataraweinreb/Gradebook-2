@@ -19,5 +19,18 @@
     // Do any additional setup after loading the view.
 }
 
+- (IBAction)SegmentControl:(UISegmentedControl *)sender {
+    switch (sender.selectedSegmentIndex) {
+        case 0:
+            break;
+        case 1:
+            [self performSegueWithIdentifier:@"green" sender:self];
+            break;
+        default:
+             [self performSegueWithIdentifier:@"red" sender:self];
+            break;
+    }
+}
 
 @end
+

@@ -15,6 +15,7 @@
 		3805FEBF234BE60D007E9CFE /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 3805FEBE234BE60D007E9CFE /* main.m */; };
 		3805FEC9234BE60D007E9CFE /* PracticeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3805FEC8234BE60D007E9CFE /* PracticeTests.m */; };
 		3805FED4234BE60D007E9CFE /* PracticeUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3805FED3234BE60D007E9CFE /* PracticeUITests.m */; };
+		381BF6E1234BFD9A0023F0A2 /* StudentInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 381BF6E0234BFD9A0023F0A2 /* StudentInfo.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +52,8 @@
 		3805FECF234BE60D007E9CFE /* PracticeUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PracticeUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3805FED3234BE60D007E9CFE /* PracticeUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PracticeUITests.m; sourceTree = "<group>"; };
 		3805FED5234BE60D007E9CFE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		381BF6DF234BFD9A0023F0A2 /* StudentInfo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StudentInfo.h; sourceTree = "<group>"; };
+		381BF6E0234BFD9A0023F0A2 /* StudentInfo.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = StudentInfo.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -110,6 +113,8 @@
 				3805FEBA234BE60D007E9CFE /* LaunchScreen.storyboard */,
 				3805FEBD234BE60D007E9CFE /* Info.plist */,
 				3805FEBE234BE60D007E9CFE /* main.m */,
+				381BF6DF234BFD9A0023F0A2 /* StudentInfo.h */,
+				381BF6E0234BFD9A0023F0A2 /* StudentInfo.m */,
 			);
 			path = Practice;
 			sourceTree = "<group>";
@@ -265,6 +270,7 @@
 				3805FEB4234BE60C007E9CFE /* ViewController.m in Sources */,
 				3805FEBF234BE60D007E9CFE /* main.m in Sources */,
 				3805FEB1234BE60C007E9CFE /* AppDelegate.m in Sources */,
+				381BF6E1234BFD9A0023F0A2 /* StudentInfo.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

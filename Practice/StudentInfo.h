@@ -19,6 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property int Homework1;
 @property int Homework2;
 @property int Homework3;
+@property NSString *Img;
 
 @end
 

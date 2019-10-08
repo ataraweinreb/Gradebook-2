@@ -177,10 +177,10 @@
             </objects>
             <point key="canvasLocation" x="-123" y="-224"/>
         </scene>
-        <!--View Controller-->
+        <!--GreenViewController-->
         <scene sceneID="Taj-hH-Lz0">
             <objects>
-                <viewController id="AtR-aY-Ciy" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="GreenViewController" id="AtR-aY-Ciy" userLabel="GreenViewController" customClass="GreenViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="nEJ-Xe-9AH">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -255,6 +255,12 @@
                         <color key="backgroundColor" red="0.87633719180000003" green="1" blue="0.1776456434" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <viewLayoutGuide key="safeArea" id="Wgu-0q-gvD"/>
                     </view>
+                    <connections>
+                        <outlet property="studentAddress" destination="OTt-pv-7nB" id="ZII-Mt-ynW"/>
+                        <outlet property="studentAverage" destination="klz-dx-sd2" id="dtb-y4-Iqn"/>
+                        <outlet property="studentImage" destination="SFw-Iy-daR" id="UwA-QA-diG"/>
+                        <outlet property="studentName" destination="HUm-sa-jQG" id="8gE-0D-ZaT"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aR6-P0-6Jw" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

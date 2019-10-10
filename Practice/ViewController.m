@@ -29,18 +29,18 @@
 //Student methods
 NSMutableArray *myArray;
 
-void removeAllStudents() {
-    if ([myArray count] == 0)
-        return;
-    [myArray removeAllObjects];
-}
-
-void removeStudent(StudentInfo *student) {
-    if (![myArray containsObject:student]) {
-        return;
-    }
-    [myArray removeObject:student];
-}
+//void removeAllStudents() {
+//    if ([myArray count] == 0)
+//        return;
+//    [myArray removeAllObjects];
+//}
+//
+//void removeStudent(StudentInfo *student) {
+//    if (![myArray containsObject:student]) {
+//        return;
+//    }
+//    [myArray removeObject:student];
+//}
 
 float studentAverage(StudentInfo *student) {
     if (![myArray containsObject:student])
@@ -140,9 +140,10 @@ BOOL addImg(NSString *student, NSString *imgName) {
 }
 
 int buttonIndex = 0;
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-
+    
     //Student #0
     addStudent(@"Bob", @"100 Central Ave");
     addTest(@"Bob", 85, @"midterm");
@@ -187,12 +188,12 @@ int buttonIndex = 0;
     addHomework(@"Sarah", 2, 2);
     addHomework(@"Sarah", 3, 4);
     addImg(@"Sarah", @"sarah.jpg");
-    enumerateAllStudents();
+    //enumerateAllStudents();
     
     _StudentLabel.text = [myArray[buttonIndex] Name];
     _AddressLabel.text = [myArray[buttonIndex] Address];
-    _MidtermLabel.text = [NSString stringWithFormat:@"%f", [myArray[buttonIndex] Midterm]];
-    _FinalLabel.text = [NSString stringWithFormat:@"%f", [myArray[buttonIndex] Final]];
+    _MidtermLabel.text = [NSString stringWithFormat:@"%.1f", [myArray[buttonIndex] Midterm]];
+    _FinalLabel.text = [NSString stringWithFormat:@"%.1f", [myArray[buttonIndex] Final]];
     _HW1Label.text = [NSString stringWithFormat:@"%d", [myArray[buttonIndex] Homework1]];
     _HW2Label.text = [NSString stringWithFormat:@"%d", [myArray[buttonIndex] Homework2]];
     _HW3Label.text = [NSString stringWithFormat:@"%d", [myArray[buttonIndex] Homework3]];
@@ -205,8 +206,8 @@ int buttonIndex = 0;
         buttonIndex--;
     _StudentLabel.text = [myArray[buttonIndex] Name];
     _AddressLabel.text = [myArray[buttonIndex] Address];
-    _MidtermLabel.text = [NSString stringWithFormat:@"%f", [myArray[buttonIndex] Midterm]];
-    _FinalLabel.text = [NSString stringWithFormat:@"%f", [myArray[buttonIndex] Final]];
+    _MidtermLabel.text = [NSString stringWithFormat:@"%.1f", [myArray[buttonIndex] Midterm]];
+    _FinalLabel.text = [NSString stringWithFormat:@"%.1f", [myArray[buttonIndex] Final]];
     _HW1Label.text = [NSString stringWithFormat:@"%d", [myArray[buttonIndex] Homework1]];
     _HW2Label.text = [NSString stringWithFormat:@"%d", [myArray[buttonIndex] Homework2]];
     _HW3Label.text = [NSString stringWithFormat:@"%d", [myArray[buttonIndex] Homework3]];
@@ -218,8 +219,8 @@ int buttonIndex = 0;
         buttonIndex++;
     _StudentLabel.text = [myArray[buttonIndex] Name];
     _AddressLabel.text = [myArray[buttonIndex] Address];
-    _MidtermLabel.text = [NSString stringWithFormat:@"%f", [myArray[buttonIndex] Midterm]];
-    _FinalLabel.text = [NSString stringWithFormat:@"%f", [myArray[buttonIndex] Final]];
+    _MidtermLabel.text = [NSString stringWithFormat:@"%.1f", [myArray[buttonIndex] Midterm]];
+    _FinalLabel.text = [NSString stringWithFormat:@"%.1f", [myArray[buttonIndex] Final]];
     _HW1Label.text = [NSString stringWithFormat:@"%d", [myArray[buttonIndex] Homework1]];
     _HW2Label.text = [NSString stringWithFormat:@"%d", [myArray[buttonIndex] Homework2]];
     _HW3Label.text = [NSString stringWithFormat:@"%d", [myArray[buttonIndex] Homework3]];
@@ -233,6 +234,12 @@ int buttonIndex = 0;
         g.passedAddress = [myArray[buttonIndex] Address];
         g.passedImage = [myArray[buttonIndex] Img];
         g.passedAverage = studentAverage(myArray[buttonIndex]);
+        g.passedIndex = buttonIndex;
+    }
+    else {
+        RedViewController *r = [segue destinationViewController];
+        r.passedMyArray = myArray;
+        r.passedIndex = buttonIndex;
     }
 }
 - (IBAction)SegmentControl:(UISegmentedControl *)sender {

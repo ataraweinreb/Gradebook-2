@@ -11,6 +11,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface GreenViewController : UIViewController
+@property int passedIndex;
 @property (nonatomic, weak) NSString *passedImage;
 @property (nonatomic, weak) NSString *passedName;
 @property (nonatomic, weak) NSString *passedAddress;

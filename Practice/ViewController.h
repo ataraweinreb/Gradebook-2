@@ -7,9 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-
 @interface ViewController : UIViewController
-
-
+@property NSMutableArray *myArray;
+@property BOOL passedFromSegue;
+@property int bIndex;
 @end
 

@@ -6,6 +6,8 @@
 //  Copyright © 2019 Atara Weinreb. All rights reserved.
 //
 
+//forwards , backwards, display and new studemt
+
 #import "ViewController.h"
 #import "StudentInfo.h"
 #import "GreenViewController.h"
@@ -13,13 +15,13 @@
 #import <Foundation/Foundation.h>
 
 @interface ViewController ()
-@property (weak, nonatomic) IBOutlet UILabel *StudentLabel;
-@property (weak, nonatomic) IBOutlet UILabel *AddressLabel;
-@property (weak, nonatomic) IBOutlet UILabel *MidtermLabel;
-@property (weak, nonatomic) IBOutlet UILabel *FinalLabel;
-@property (weak, nonatomic) IBOutlet UILabel *HW1Label;
-@property (weak, nonatomic) IBOutlet UILabel *HW2Label;
-@property (weak, nonatomic) IBOutlet UILabel *HW3Label;
+@property (weak, nonatomic) IBOutlet UITextField *StudentLabel;
+@property (weak, nonatomic) IBOutlet UITextField *AddressLabel;
+@property (weak, nonatomic) IBOutlet UITextField *MidtermLabel;
+@property (weak, nonatomic) IBOutlet UITextField *FinalLabel;
+@property (weak, nonatomic) IBOutlet UITextField *HW1Label;
+@property (weak, nonatomic) IBOutlet UITextField *HW2Label;
+@property (weak, nonatomic) IBOutlet UITextField *HW3Label;
 @property (weak, nonatomic) IBOutlet UIButton *forwards;
 @property (weak, nonatomic) IBOutlet UIButton *backwards;
 @end
@@ -226,8 +228,48 @@ BOOL firstLoad = YES;
     }
 }
 
+void saveStudentInfo(UITextField *StudentLabel, UITextField *AddressLabel, UITextField *MidtermLabel, UITextField *FinalLabel, UITextField *HW1Label, UITextField *HW2Label, UITextField *HW3Label) {
+    //Save changes
+    StudentInfo *current = myArray[buttonIndex];
+    current.Name = StudentLabel.text;
+    current.Address = AddressLabel.text;
+    if (MidtermLabel.text.length == 0) {
+        current.Midterm = -999;
+    }
+    else {
+        current.Midterm = [MidtermLabel.text floatValue];
+    }
+    if (FinalLabel.text.length == 0) {
+        current.Final = -999;
+    }
+    else {
+        current.Final = [FinalLabel.text floatValue];
+    }
+    if (HW1Label.text.length == 0) {
+        current.Homework1 = -999;
+    }
+    else {
+        current.Homework1 = [HW1Label.text intValue];
+    }
+    if (HW2Label.text.length == 0) {
+        current.Homework2 = -999;
+    }
+    else {
+        current.Homework2 = [HW2Label.text intValue];
+    }
+    if (HW3Label.text.length == 0) {
+        current.Homework3 = -999;
+    }
+    else {
+        current.Homework3 = [HW3Label.text intValue];
+    }
+    //END OF SAVE
+}
+
 //Actions
 - (IBAction)backwardsButton:(UIButton *)sender {
+    saveStudentInfo(_StudentLabel, _AddressLabel, _MidtermLabel, _FinalLabel, _HW1Label, _HW2Label, _HW3Label);
+
     if (buttonIndex > 0)
         buttonIndex--;
     
@@ -266,9 +308,11 @@ BOOL firstLoad = YES;
 }
 
 - (IBAction)forwardsButton:(UIButton *)sender {
+    saveStudentInfo(_StudentLabel, _AddressLabel, _MidtermLabel, _FinalLabel, _HW1Label, _HW2Label, _HW3Label);
+    
     if (buttonIndex < myArray.count-1)
         buttonIndex++;
- 
+    
     _StudentLabel.text = [myArray[buttonIndex] Name];
     _AddressLabel.text = [myArray[buttonIndex] Address];
     if (!([myArray[buttonIndex] Midterm] == -999) && ![myArray[buttonIndex] midtermPending]){
@@ -304,6 +348,9 @@ BOOL firstLoad = YES;
 }
 
 - (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    
+    saveStudentInfo(_StudentLabel, _AddressLabel, _MidtermLabel, _FinalLabel, _HW1Label, _HW2Label, _HW3Label);
+    
     if ([segue.identifier isEqualToString:@"green"]) {
         GreenViewController *greenVC = [segue destinationViewController];
         greenVC.nameFromSegue = [myArray[buttonIndex] Name];

@@ -11,16 +11,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface RedViewController : UIViewController
-@property int passedIndex;
-@property (nonatomic, weak) NSMutableArray *passedMyArray;
-@property (nonatomic, weak) NSString *redStudentName;
-@property (nonatomic, weak) NSString *redStudentAddress;
-@property (nonatomic, weak) NSString *redMidterm;
-@property (nonatomic, weak) NSString *redFinal;
-@property (nonatomic, weak) NSString *redHW1;
-@property (nonatomic, weak) NSString *redHW2;
-@property (nonatomic, weak) NSString *redHW3;
-@property (nonatomic, weak) NSString *redPhotoName;
+@property (nonatomic, weak) NSMutableArray *myArrayFromSegue;
 @property Boolean pending;
 @end
 

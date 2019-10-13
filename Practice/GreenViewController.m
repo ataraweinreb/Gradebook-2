@@ -20,10 +20,15 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    _studentName.text = _passedName;
-    _studentAddress.text = _passedAddress;
-    _studentAverage.text = [NSString stringWithFormat:@"%.1f", _passedAverage];
-    _studentImage.image = [UIImage imageNamed:_passedImage];
+    _studentName.text = _nameFromSegue;
+    _studentAddress.text = _addressFromSegue;
+    if (_pendingFromSegue || _averageFromSegue == -999) { //score is pending
+        _studentAverage.text = @"Pending";
+    }
+    else {
+        _studentAverage.text = [NSString stringWithFormat:@"%.1f", _averageFromSegue];
+    }
+    _studentImage.image = [UIImage imageNamed:_imageFromSegue];
 }
 
 @end

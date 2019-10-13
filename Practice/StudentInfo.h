@@ -20,7 +20,12 @@ NS_ASSUME_NONNULL_BEGIN
 @property int Homework2;
 @property int Homework3;
 @property NSString *Img;
-
+@property BOOL pending;
+@property BOOL midtermPending;
+@property BOOL finalPending;
+@property BOOL hw1Pending;
+@property BOOL hw2Pending;
+@property BOOL hw3Pending;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -11,11 +11,11 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface GreenViewController : UIViewController
-@property int passedIndex;
-@property (nonatomic, weak) NSString *passedImage;
-@property (nonatomic, weak) NSString *passedName;
-@property (nonatomic, weak) NSString *passedAddress;
-@property float passedAverage;
+@property (nonatomic, weak) NSString *imageFromSegue;
+@property (nonatomic, weak) NSString *nameFromSegue;
+@property (nonatomic, weak) NSString *addressFromSegue;
+@property BOOL pendingFromSegue;
+@property float averageFromSegue;
 @end
 
 NS_ASSUME_NONNULL_END

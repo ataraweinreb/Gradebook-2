@@ -15,6 +15,7 @@
 		3805FEBF234BE60D007E9CFE /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 3805FEBE234BE60D007E9CFE /* main.m */; };
 		3805FEC9234BE60D007E9CFE /* PracticeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3805FEC8234BE60D007E9CFE /* PracticeTests.m */; };
 		3805FED4234BE60D007E9CFE /* PracticeUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3805FED3234BE60D007E9CFE /* PracticeUITests.m */; };
+		381AA1182352FB7E00D79D28 /* CustomButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 381AA1172352FB7E00D79D28 /* CustomButton.m */; };
 		381BF6E1234BFD9A0023F0A2 /* StudentInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 381BF6E0234BFD9A0023F0A2 /* StudentInfo.m */; };
 		381BF722234C165E0023F0A2 /* RedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 381BF721234C165E0023F0A2 /* RedViewController.m */; };
 		381BF725234C167C0023F0A2 /* GreenViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 381BF724234C167C0023F0A2 /* GreenViewController.m */; };
@@ -54,6 +55,8 @@
 		3805FECF234BE60D007E9CFE /* PracticeUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PracticeUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3805FED3234BE60D007E9CFE /* PracticeUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PracticeUITests.m; sourceTree = "<group>"; };
 		3805FED5234BE60D007E9CFE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		381AA1162352FB7E00D79D28 /* CustomButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CustomButton.h; sourceTree = "<group>"; };
+		381AA1172352FB7E00D79D28 /* CustomButton.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CustomButton.m; sourceTree = "<group>"; };
 		381BF6DF234BFD9A0023F0A2 /* StudentInfo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StudentInfo.h; sourceTree = "<group>"; };
 		381BF6E0234BFD9A0023F0A2 /* StudentInfo.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = StudentInfo.m; sourceTree = "<group>"; };
 		381BF720234C165E0023F0A2 /* RedViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RedViewController.h; sourceTree = "<group>"; };
@@ -111,6 +114,8 @@
 			isa = PBXGroup;
 			children = (
 				3805FEAF234BE60C007E9CFE /* AppDelegate.h */,
+				381AA1162352FB7E00D79D28 /* CustomButton.h */,
+				381AA1172352FB7E00D79D28 /* CustomButton.m */,
 				3805FEB0234BE60C007E9CFE /* AppDelegate.m */,
 				3805FEB2234BE60C007E9CFE /* ViewController.h */,
 				3805FEB3234BE60C007E9CFE /* ViewController.m */,
@@ -280,6 +285,7 @@
 				3805FEB4234BE60C007E9CFE /* ViewController.m in Sources */,
 				3805FEBF234BE60D007E9CFE /* main.m in Sources */,
 				381BF725234C167C0023F0A2 /* GreenViewController.m in Sources */,
+				381AA1182352FB7E00D79D28 /* CustomButton.m in Sources */,
 				3805FEB1234BE60C007E9CFE /* AppDelegate.m in Sources */,
 				381BF6E1234BFD9A0023F0A2 /* StudentInfo.m in Sources */,
 				381BF722234C165E0023F0A2 /* RedViewController.m in Sources */,

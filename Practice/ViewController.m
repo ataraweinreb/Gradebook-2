@@ -13,7 +13,6 @@
 #import <Foundation/Foundation.h>
 
 @interface ViewController ()
-//Display Labels
 @property (weak, nonatomic) IBOutlet UILabel *StudentLabel;
 @property (weak, nonatomic) IBOutlet UILabel *AddressLabel;
 @property (weak, nonatomic) IBOutlet UILabel *MidtermLabel;
@@ -21,7 +20,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *HW1Label;
 @property (weak, nonatomic) IBOutlet UILabel *HW2Label;
 @property (weak, nonatomic) IBOutlet UILabel *HW3Label;
-
+@property (weak, nonatomic) IBOutlet UIButton *forwards;
+@property (weak, nonatomic) IBOutlet UIButton *backwards;
 @end
 
 @implementation ViewController
@@ -29,18 +29,12 @@
 //Student methods
 NSMutableArray *myArray;
 
-//void removeAllStudents() {
-//    if ([myArray count] == 0)
-//        return;
-//    [myArray removeAllObjects];
-//}
-//
-//void removeStudent(StudentInfo *student) {
-//    if (![myArray containsObject:student]) {
-//        return;
-//    }
-//    [myArray removeObject:student];
-//}
+void removeStudent(StudentInfo *student) {
+    if (![myArray containsObject:student]) {
+        return;
+    }
+    [myArray removeObject:student];
+}
 
 float studentAverage(StudentInfo *student) {
     if (![myArray containsObject:student])
@@ -51,17 +45,18 @@ float studentAverage(StudentInfo *student) {
     int homework2 = [student Homework2];
     int homework3 = [student Homework3];
     int homework = (homework1 + homework2 + homework3) * 10 /3; //homework is graded out of 10
-    
-    if (midterm < 0 || final < 0 || homework1 < 0 || homework2 < 0 || homework3 < 0)
+    if ([student pending] || midterm < 0 || final < 0 || homework1 < 0 || homework2 < 0 || homework3 < 0)
         return -999;
     float avg = (midterm * .30) + (final * .40) + (homework * .30);
     return avg;
 }
 
+//For debugging
 void printObject(StudentInfo *student) {
     NSLog(@"\n****************************************\n\n\n\tName: %@\n\tAddress: %@\n\tMidterm: %.1f\n\tFinal: %.1f\n\tHomework #1: %.d\n\tHomework #2: %d\n\tHomework #3: %d\n\n\n****************************************", (NSString *)student.Name, (NSString *)student.Address, student.Midterm, student.Final, student.Homework1, student.Homework2, student.Homework3);
 }
 
+//For debugging
 void enumerateAllStudents() {
     for(int i = 0; i < myArray.count; i++) {
         StudentInfo *temp = myArray[i];
@@ -93,7 +88,7 @@ BOOL addStudent(NSString *name, NSString *address) {
     }
 }
 
-BOOL addTest(NSString *name, float score, NSString *test) {
+BOOL addTestScore(NSString *name, float score, NSString *test) {
     for (int i = 0; i < myArray.count; i++) {
         if ([myArray[i] Name] == name) {
             if ([test isEqualToString:@"midterm"])
@@ -108,7 +103,7 @@ BOOL addTest(NSString *name, float score, NSString *test) {
     return false;
 }
 
-BOOL addHomework(NSString *student, int assignment, int score) {
+BOOL addHomeworkScore(NSString *student, int assignment, int score) {
     if (assignment < 1 || assignment > 3)
         return false;
     int index = -1;
@@ -139,109 +134,190 @@ BOOL addImg(NSString *student, NSString *imgName) {
     return true;
 }
 
-int buttonIndex = 0;
-
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    
+void createInitialData() {
     //Student #0
     addStudent(@"Bob", @"100 Central Ave");
-    addTest(@"Bob", 85, @"midterm");
-    addTest(@"Bob", 95, @"final");
-    addHomework(@"Bob", 1, 7);
-    addHomework(@"Bob", 2, 6);
-    addHomework(@"Bob", 3, 10);
+    addTestScore(@"Bob", 85, @"midterm");
+    addTestScore(@"Bob", 95, @"final");
+    addHomeworkScore(@"Bob", 1, 7);
+    addHomeworkScore(@"Bob", 2, 6);
+    addHomeworkScore(@"Bob", 3, 10);
     addImg(@"Bob", @"bob.jpg");
     
     //Student #1
     addStudent(@"Molly", @"80 Charles St");
-    addTest(@"Molly", 70, @"midterm");
-    addTest(@"Molly", 65, @"final");
-    addHomework(@"Molly", 1, 7);
-    addHomework(@"Molly", 2, 4);
-    addHomework(@"Molly", 3, 9);
+    addTestScore(@"Molly", 79, @"midterm");
+    addTestScore(@"Molly", 88, @"final");
+    addHomeworkScore(@"Molly", 1, 7);
+    addHomeworkScore(@"Molly", 2, 4);
+    addHomeworkScore(@"Molly", 3, 9);
     addImg(@"Molly", @"molly.jpg");
     
     //Student #2
     addStudent(@"Carol", @"12 Virginia St");
-    addTest(@"Carol", 100, @"midterm");
-    addTest(@"Carol", 98.5, @"final");
-    addHomework(@"Carol", 1, 9);
-    addHomework(@"Carol", 2, 10);
-    addHomework(@"Carol", 3, 10);
+    addTestScore(@"Carol", 100, @"midterm");
+    addTestScore(@"Carol", 98.5, @"final");
+    addHomeworkScore(@"Carol", 1, 9);
+    addHomeworkScore(@"Carol", 2, 10);
+    addHomeworkScore(@"Carol", 3, 10);
     addImg(@"Carol", @"carol.jpg");
     
     //Student #3
     addStudent(@"David", @"44 Crestwood Rd");
-    addTest(@"David", 77, @"midterm");
-    addTest(@"David", 82.5, @"final");
-    addHomework(@"David", 1, 10);
-    addHomework(@"David", 2, 3);
-    addHomework(@"David", 3, 6);
+    addTestScore(@"David", 77, @"midterm");
+    addTestScore(@"David", 82.5, @"final");
+    addHomeworkScore(@"David", 1, 10);
+    addHomeworkScore(@"David", 2, 3);
+    addHomeworkScore(@"David", 3, 6);
     addImg(@"David", @"david.jpg");
     
     //Student #4
     addStudent(@"Sarah", @"111 Woodmere Place");
-    addTest(@"Sarah", 45, @"midterm");
-    addTest(@"Sarah", 55, @"final");
-    addHomework(@"Sarah", 1, 6);
-    addHomework(@"Sarah", 2, 2);
-    addHomework(@"Sarah", 3, 4);
+    addTestScore(@"Sarah", 85, @"midterm");
+    addTestScore(@"Sarah", 77, @"final");
+    addHomeworkScore(@"Sarah", 1, 6);
+    addHomeworkScore(@"Sarah", 2, 2);
+    addHomeworkScore(@"Sarah", 3, 4);
     addImg(@"Sarah", @"sarah.jpg");
-    //enumerateAllStudents();
+}
+
+int buttonIndex = 0;
+BOOL firstLoad = YES;
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+
+    if (firstLoad) {
+        createInitialData();
+        firstLoad = NO;
+    }
     
     _StudentLabel.text = [myArray[buttonIndex] Name];
     _AddressLabel.text = [myArray[buttonIndex] Address];
-    _MidtermLabel.text = [NSString stringWithFormat:@"%.1f", [myArray[buttonIndex] Midterm]];
-    _FinalLabel.text = [NSString stringWithFormat:@"%.1f", [myArray[buttonIndex] Final]];
-    _HW1Label.text = [NSString stringWithFormat:@"%d", [myArray[buttonIndex] Homework1]];
-    _HW2Label.text = [NSString stringWithFormat:@"%d", [myArray[buttonIndex] Homework2]];
-    _HW3Label.text = [NSString stringWithFormat:@"%d", [myArray[buttonIndex] Homework3]];
-    
+    if (!([myArray[buttonIndex] Midterm] == -999) && ![myArray[buttonIndex] midtermPending]){
+        _MidtermLabel.text = [NSString stringWithFormat:@"%.1f", [myArray[buttonIndex] Midterm]];
+    }
+    else {
+        _MidtermLabel.text = @"";
+    }
+    if (!([myArray[buttonIndex] Final] == -999) && ![myArray[buttonIndex] finalPending]){
+        _FinalLabel.text = [NSString stringWithFormat:@"%.1f", [myArray[buttonIndex] Final]];
+    }
+    else {
+        _FinalLabel.text = @"";
+    }
+    if (!([myArray[buttonIndex] Homework1] == -999) && ![myArray[buttonIndex] hw1Pending]){
+        _HW1Label.text = [NSString stringWithFormat:@"%d", [myArray[buttonIndex] Homework1]];
+    }
+    else {
+        _HW1Label.text = @"";
+    }
+    if (!([myArray[buttonIndex] Homework2] == -999) && ![myArray[buttonIndex] hw2Pending]){
+        _HW2Label.text = [NSString stringWithFormat:@"%d", [myArray[buttonIndex] Homework2]];
+    }
+    else {
+        _HW2Label.text = @"";
+    }
+    if (!([myArray[buttonIndex] Homework3] == -999) && ![myArray[buttonIndex] hw3Pending]){
+        _HW3Label.text = [NSString stringWithFormat:@"%d", [myArray[buttonIndex] Homework3]];
+    }
+    else {
+        _HW3Label.text = @"";
+    }
 }
 
 //Actions
 - (IBAction)backwardsButton:(UIButton *)sender {
     if (buttonIndex > 0)
         buttonIndex--;
+    
     _StudentLabel.text = [myArray[buttonIndex] Name];
     _AddressLabel.text = [myArray[buttonIndex] Address];
-    _MidtermLabel.text = [NSString stringWithFormat:@"%.1f", [myArray[buttonIndex] Midterm]];
-    _FinalLabel.text = [NSString stringWithFormat:@"%.1f", [myArray[buttonIndex] Final]];
-    _HW1Label.text = [NSString stringWithFormat:@"%d", [myArray[buttonIndex] Homework1]];
-    _HW2Label.text = [NSString stringWithFormat:@"%d", [myArray[buttonIndex] Homework2]];
-    _HW3Label.text = [NSString stringWithFormat:@"%d", [myArray[buttonIndex] Homework3]];
-    
+    if (!([myArray[buttonIndex] Midterm] == -999) && ![myArray[buttonIndex] midtermPending]){
+        _MidtermLabel.text = [NSString stringWithFormat:@"%.1f", [myArray[buttonIndex] Midterm]];
+    }
+    else {
+        _MidtermLabel.text = @"";
+    }
+    if (!([myArray[buttonIndex] Final] == -999) && ![myArray[buttonIndex] finalPending]){
+        _FinalLabel.text = [NSString stringWithFormat:@"%.1f", [myArray[buttonIndex] Final]];
+    }
+    else {
+        _FinalLabel.text = @"";
+    }
+    if (!([myArray[buttonIndex] Homework1] == -999) && ![myArray[buttonIndex] hw1Pending]){
+        _HW1Label.text = [NSString stringWithFormat:@"%d", [myArray[buttonIndex] Homework1]];
+    }
+    else {
+        _HW1Label.text = @"";
+    }
+    if (!([myArray[buttonIndex] Homework2] == -999) && ![myArray[buttonIndex] hw2Pending]){
+        _HW2Label.text = [NSString stringWithFormat:@"%d", [myArray[buttonIndex] Homework2]];
+    }
+    else {
+        _HW2Label.text = @"";
+    }
+    if (!([myArray[buttonIndex] Homework3] == -999) && ![myArray[buttonIndex] hw3Pending]){
+        _HW3Label.text = [NSString stringWithFormat:@"%d", [myArray[buttonIndex] Homework3]];
+    }
+    else {
+        _HW3Label.text = @"";
+    }
 }
 
 - (IBAction)forwardsButton:(UIButton *)sender {
     if (buttonIndex < myArray.count-1)
         buttonIndex++;
+ 
     _StudentLabel.text = [myArray[buttonIndex] Name];
     _AddressLabel.text = [myArray[buttonIndex] Address];
-    _MidtermLabel.text = [NSString stringWithFormat:@"%.1f", [myArray[buttonIndex] Midterm]];
-    _FinalLabel.text = [NSString stringWithFormat:@"%.1f", [myArray[buttonIndex] Final]];
-    _HW1Label.text = [NSString stringWithFormat:@"%d", [myArray[buttonIndex] Homework1]];
-    _HW2Label.text = [NSString stringWithFormat:@"%d", [myArray[buttonIndex] Homework2]];
-    _HW3Label.text = [NSString stringWithFormat:@"%d", [myArray[buttonIndex] Homework3]];
-    
+    if (!([myArray[buttonIndex] Midterm] == -999) && ![myArray[buttonIndex] midtermPending]){
+        _MidtermLabel.text = [NSString stringWithFormat:@"%.1f", [myArray[buttonIndex] Midterm]];
+    }
+    else {
+        _MidtermLabel.text = @"";
+    }
+    if (!([myArray[buttonIndex] Final] == -999) && ![myArray[buttonIndex] finalPending]){
+        _FinalLabel.text = [NSString stringWithFormat:@"%.1f", [myArray[buttonIndex] Final]];
+    }
+    else {
+        _FinalLabel.text = @"";
+    }
+    if (!([myArray[buttonIndex] Homework1] == -999) && ![myArray[buttonIndex] hw1Pending]){
+        _HW1Label.text = [NSString stringWithFormat:@"%d", [myArray[buttonIndex] Homework1]];
+    }
+    else {
+        _HW1Label.text = @"";
+    }
+    if (!([myArray[buttonIndex] Homework2] == -999) && ![myArray[buttonIndex] hw2Pending]){
+        _HW2Label.text = [NSString stringWithFormat:@"%d", [myArray[buttonIndex] Homework2]];
+    }
+    else {
+        _HW2Label.text = @"";
+    }
+    if (!([myArray[buttonIndex] Homework3] == -999) && ![myArray[buttonIndex] hw3Pending]){
+        _HW3Label.text = [NSString stringWithFormat:@"%d", [myArray[buttonIndex] Homework3]];
+    }
+    else {
+        _HW3Label.text = @"";
+    }
 }
 
 - (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.identifier isEqualToString:@"green"]) {
-        GreenViewController *g = [segue destinationViewController];
-        g.passedName = [myArray[buttonIndex] Name];
-        g.passedAddress = [myArray[buttonIndex] Address];
-        g.passedImage = [myArray[buttonIndex] Img];
-        g.passedAverage = studentAverage(myArray[buttonIndex]);
-        g.passedIndex = buttonIndex;
+        GreenViewController *greenVC = [segue destinationViewController];
+        greenVC.nameFromSegue = [myArray[buttonIndex] Name];
+        greenVC.addressFromSegue = [myArray[buttonIndex] Address];
+        greenVC.imageFromSegue = [myArray[buttonIndex] Img];
+        greenVC.averageFromSegue = studentAverage(myArray[buttonIndex]);
+        greenVC.pendingFromSegue = [myArray[buttonIndex] pending];
     }
     else {
-        RedViewController *r = [segue destinationViewController];
-        r.passedMyArray = myArray;
-        r.passedIndex = buttonIndex;
+        RedViewController *redVC = [segue destinationViewController];
+        redVC.myArrayFromSegue = myArray;
     }
 }
+
 - (IBAction)SegmentControl:(UISegmentedControl *)sender {
     switch (sender.selectedSegmentIndex) {
         case 0:

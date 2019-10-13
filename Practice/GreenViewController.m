@@ -7,6 +7,7 @@
 //
 
 #import "GreenViewController.h"
+#import "StudentInfo.h"
 
 @interface GreenViewController ()
 @property (weak, nonatomic) IBOutlet UILabel *studentName;
@@ -22,6 +23,7 @@
     [super viewDidLoad];
     _studentName.text = _nameFromSegue;
     _studentAddress.text = _addressFromSegue;
+    
     if (_pendingFromSegue || _averageFromSegue == -999) { //score is pending
         _studentAverage.text = @"Pending";
     }

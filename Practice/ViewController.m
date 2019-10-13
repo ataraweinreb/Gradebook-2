@@ -6,8 +6,6 @@
 //  Copyright © 2019 Atara Weinreb. All rights reserved.
 //
 
-//forwards , backwards, display and new studemt
-
 #import "ViewController.h"
 #import "StudentInfo.h"
 #import "GreenViewController.h"
@@ -37,6 +35,13 @@ void removeStudent(StudentInfo *student) {
     [myArray removeObject:student];
 }
 
+void setPending(StudentInfo *s) {
+    if (s.midtermPending || s.finalPending || s.hw1Pending || s.hw2Pending || s.hw3Pending)
+        s.pending = YES;
+    else
+        s.pending = NO;
+}
+
 float studentAverage(StudentInfo *student) {
     if (![myArray containsObject:student])
         return -999;
@@ -46,6 +51,7 @@ float studentAverage(StudentInfo *student) {
     int homework2 = [student Homework2];
     int homework3 = [student Homework3];
     int homework = (homework1 + homework2 + homework3) * 10 /3; //homework is graded out of 10
+    setPending(student);
     if ([student pending] || midterm < 0 || final < 0 || homework1 < 0 || homework2 < 0 || homework3 < 0)
         return -999;
     float avg = (midterm * .30) + (final * .40) + (homework * .30);
@@ -231,13 +237,11 @@ BOOL firstLoad = YES;
 }
 
 void saveStudentInfo(UITextField *StudentLabel, UITextField *AddressLabel, UITextField *MidtermLabel, UITextField *FinalLabel, UITextField *HW1Label, UITextField *HW2Label, UITextField *HW3Label) {
-    NSLog(@"Saved!!!");
+
     StudentInfo *current = myArray[buttonIndex];
     current.Name = StudentLabel.text;
     current.Address = AddressLabel.text;
     
-  //  NSLog(@"%f", current.Midterm);
-   // NSLog(@"%f",[MidtermLabel.text floatValue]);
     if (MidtermLabel.text.length == 0) {
         current.midtermPending = YES;
     }
@@ -279,7 +283,6 @@ void saveStudentInfo(UITextField *StudentLabel, UITextField *AddressLabel, UITex
     current.Homework3 = [HW3Label.text intValue];
 }
 
-//Actions
 - (IBAction)backwardsButton:(UIButton *)sender {
     saveStudentInfo(_StudentLabel, _AddressLabel, _MidtermLabel, _FinalLabel, _HW1Label, _HW2Label, _HW3Label);
 
@@ -304,6 +307,7 @@ void saveStudentInfo(UITextField *StudentLabel, UITextField *AddressLabel, UITex
     
     if ([segue.identifier isEqualToString:@"green"]) {
         GreenViewController *greenVC = [segue destinationViewController];
+        setPending(myArray[buttonIndex]);
         greenVC.nameFromSegue = [myArray[buttonIndex] Name];
         greenVC.addressFromSegue = [myArray[buttonIndex] Address];
         greenVC.imageFromSegue = [myArray[buttonIndex] Img];

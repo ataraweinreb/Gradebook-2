@@ -28,7 +28,6 @@
 
 @implementation ViewController
 
-//Student methods
 NSMutableArray *myArray;
 
 void removeStudent(StudentInfo *student) {
@@ -183,6 +182,41 @@ void createInitialData() {
     addImg(@"Sarah", @"sarah.jpg");
 }
 
+void displayStudentInfo(UITextField *StudentLabel, UITextField *AddressLabel, UITextField *MidtermLabel, UITextField *FinalLabel, UITextField *HW1Label, UITextField *HW2Label, UITextField *HW3Label) {
+    StudentLabel.text = [myArray[buttonIndex] Name];
+    AddressLabel.text = [myArray[buttonIndex] Address];
+    if ([myArray[buttonIndex] Midterm] != -999 && ![myArray[buttonIndex] midtermPending]) {
+        MidtermLabel.text = [NSString stringWithFormat:@"%.1f", [myArray[buttonIndex] Midterm]];
+    }
+    else {
+        MidtermLabel.text = @"";
+    }
+    if ([myArray[buttonIndex] Final] != -999 && ![myArray[buttonIndex] finalPending]){
+        FinalLabel.text = [NSString stringWithFormat:@"%.1f", [myArray[buttonIndex] Final]];
+    }
+    else {
+        FinalLabel.text = @"";
+    }
+    if ([myArray[buttonIndex] Homework1] != -999 && ![myArray[buttonIndex] hw1Pending]){
+        HW1Label.text = [NSString stringWithFormat:@"%d", [myArray[buttonIndex] Homework1]];
+    }
+    else {
+        HW1Label.text = @"";
+    }
+    if ([myArray[buttonIndex] Homework2] != -999 && ![myArray[buttonIndex] hw2Pending]){
+        HW2Label.text = [NSString stringWithFormat:@"%d", [myArray[buttonIndex] Homework2]];
+    }
+    else {
+        HW2Label.text = @"";
+    }
+    if ([myArray[buttonIndex] Homework3] != -999 && ![myArray[buttonIndex] hw3Pending]){
+        HW3Label.text = [NSString stringWithFormat:@"%d", [myArray[buttonIndex] Homework3]];
+    }
+    else {
+        HW3Label.text = @"";
+    }
+}
+
 int buttonIndex = 0;
 BOOL firstLoad = YES;
 
@@ -193,77 +227,56 @@ BOOL firstLoad = YES;
         createInitialData();
         firstLoad = NO;
     }
-    
-    _StudentLabel.text = [myArray[buttonIndex] Name];
-    _AddressLabel.text = [myArray[buttonIndex] Address];
-    if (!([myArray[buttonIndex] Midterm] == -999) && ![myArray[buttonIndex] midtermPending]){
-        _MidtermLabel.text = [NSString stringWithFormat:@"%.1f", [myArray[buttonIndex] Midterm]];
-    }
-    else {
-        _MidtermLabel.text = @"";
-    }
-    if (!([myArray[buttonIndex] Final] == -999) && ![myArray[buttonIndex] finalPending]){
-        _FinalLabel.text = [NSString stringWithFormat:@"%.1f", [myArray[buttonIndex] Final]];
-    }
-    else {
-        _FinalLabel.text = @"";
-    }
-    if (!([myArray[buttonIndex] Homework1] == -999) && ![myArray[buttonIndex] hw1Pending]){
-        _HW1Label.text = [NSString stringWithFormat:@"%d", [myArray[buttonIndex] Homework1]];
-    }
-    else {
-        _HW1Label.text = @"";
-    }
-    if (!([myArray[buttonIndex] Homework2] == -999) && ![myArray[buttonIndex] hw2Pending]){
-        _HW2Label.text = [NSString stringWithFormat:@"%d", [myArray[buttonIndex] Homework2]];
-    }
-    else {
-        _HW2Label.text = @"";
-    }
-    if (!([myArray[buttonIndex] Homework3] == -999) && ![myArray[buttonIndex] hw3Pending]){
-        _HW3Label.text = [NSString stringWithFormat:@"%d", [myArray[buttonIndex] Homework3]];
-    }
-    else {
-        _HW3Label.text = @"";
-    }
+    displayStudentInfo(_StudentLabel, _AddressLabel, _MidtermLabel, _FinalLabel, _HW1Label, _HW2Label, _HW3Label);
 }
 
 void saveStudentInfo(UITextField *StudentLabel, UITextField *AddressLabel, UITextField *MidtermLabel, UITextField *FinalLabel, UITextField *HW1Label, UITextField *HW2Label, UITextField *HW3Label) {
-    //Save changes
+    NSLog(@"Saved!!!");
     StudentInfo *current = myArray[buttonIndex];
     current.Name = StudentLabel.text;
     current.Address = AddressLabel.text;
+    
+  //  NSLog(@"%f", current.Midterm);
+   // NSLog(@"%f",[MidtermLabel.text floatValue]);
     if (MidtermLabel.text.length == 0) {
-        current.Midterm = -999;
+        current.midtermPending = YES;
     }
     else {
-        current.Midterm = [MidtermLabel.text floatValue];
+        current.midtermPending = NO;
     }
+    current.Midterm = [MidtermLabel.text floatValue];
+    
     if (FinalLabel.text.length == 0) {
-        current.Final = -999;
+        current.finalPending = YES;
     }
     else {
-        current.Final = [FinalLabel.text floatValue];
+        current.finalPending = NO;
     }
+    current.Final = [FinalLabel.text floatValue];
+    
     if (HW1Label.text.length == 0) {
-        current.Homework1 = -999;
+        current.hw1Pending = YES;
     }
     else {
-        current.Homework1 = [HW1Label.text intValue];
+        current.hw1Pending = NO;
     }
+    current.Homework1 = [HW1Label.text intValue];
+    
     if (HW2Label.text.length == 0) {
-        current.Homework2 = -999;
+        current.hw2Pending = YES;
     }
     else {
-        current.Homework2 = [HW2Label.text intValue];
+        current.hw2Pending = NO;
     }
+    current.Homework2 = [HW2Label.text intValue];
+    
     if (HW3Label.text.length == 0) {
-        current.Homework3 = -999;
+        current.hw3Pending = YES;
     }
     else {
-        current.Homework3 = [HW3Label.text intValue];
+        current.hw3Pending = NO;
     }
-    //END OF SAVE
+    current.Homework3 = [HW3Label.text intValue];
 }
 
 //Actions
@@ -273,38 +286,7 @@ void saveStudentInfo(UITextField *StudentLabel, UITextField *AddressLabel, UITex
     if (buttonIndex > 0)
         buttonIndex--;
     
-    _StudentLabel.text = [myArray[buttonIndex] Name];
-    _AddressLabel.text = [myArray[buttonIndex] Address];
-    if (!([myArray[buttonIndex] Midterm] == -999) && ![myArray[buttonIndex] midtermPending]){
-        _MidtermLabel.text = [NSString stringWithFormat:@"%.1f", [myArray[buttonIndex] Midterm]];
-    }
-    else {
-        _MidtermLabel.text = @"";
-    }
-    if (!([myArray[buttonIndex] Final] == -999) && ![myArray[buttonIndex] finalPending]){
-        _FinalLabel.text = [NSString stringWithFormat:@"%.1f", [myArray[buttonIndex] Final]];
-    }
-    else {
-        _FinalLabel.text = @"";
-    }
-    if (!([myArray[buttonIndex] Homework1] == -999) && ![myArray[buttonIndex] hw1Pending]){
-        _HW1Label.text = [NSString stringWithFormat:@"%d", [myArray[buttonIndex] Homework1]];
-    }
-    else {
-        _HW1Label.text = @"";
-    }
-    if (!([myArray[buttonIndex] Homework2] == -999) && ![myArray[buttonIndex] hw2Pending]){
-        _HW2Label.text = [NSString stringWithFormat:@"%d", [myArray[buttonIndex] Homework2]];
-    }
-    else {
-        _HW2Label.text = @"";
-    }
-    if (!([myArray[buttonIndex] Homework3] == -999) && ![myArray[buttonIndex] hw3Pending]){
-        _HW3Label.text = [NSString stringWithFormat:@"%d", [myArray[buttonIndex] Homework3]];
-    }
-    else {
-        _HW3Label.text = @"";
-    }
+    displayStudentInfo(_StudentLabel, _AddressLabel, _MidtermLabel, _FinalLabel, _HW1Label, _HW2Label, _HW3Label);
 }
 
 - (IBAction)forwardsButton:(UIButton *)sender {
@@ -313,38 +295,7 @@ void saveStudentInfo(UITextField *StudentLabel, UITextField *AddressLabel, UITex
     if (buttonIndex < myArray.count-1)
         buttonIndex++;
     
-    _StudentLabel.text = [myArray[buttonIndex] Name];
-    _AddressLabel.text = [myArray[buttonIndex] Address];
-    if (!([myArray[buttonIndex] Midterm] == -999) && ![myArray[buttonIndex] midtermPending]){
-        _MidtermLabel.text = [NSString stringWithFormat:@"%.1f", [myArray[buttonIndex] Midterm]];
-    }
-    else {
-        _MidtermLabel.text = @"";
-    }
-    if (!([myArray[buttonIndex] Final] == -999) && ![myArray[buttonIndex] finalPending]){
-        _FinalLabel.text = [NSString stringWithFormat:@"%.1f", [myArray[buttonIndex] Final]];
-    }
-    else {
-        _FinalLabel.text = @"";
-    }
-    if (!([myArray[buttonIndex] Homework1] == -999) && ![myArray[buttonIndex] hw1Pending]){
-        _HW1Label.text = [NSString stringWithFormat:@"%d", [myArray[buttonIndex] Homework1]];
-    }
-    else {
-        _HW1Label.text = @"";
-    }
-    if (!([myArray[buttonIndex] Homework2] == -999) && ![myArray[buttonIndex] hw2Pending]){
-        _HW2Label.text = [NSString stringWithFormat:@"%d", [myArray[buttonIndex] Homework2]];
-    }
-    else {
-        _HW2Label.text = @"";
-    }
-    if (!([myArray[buttonIndex] Homework3] == -999) && ![myArray[buttonIndex] hw3Pending]){
-        _HW3Label.text = [NSString stringWithFormat:@"%d", [myArray[buttonIndex] Homework3]];
-    }
-    else {
-        _HW3Label.text = @"";
-    }
+     displayStudentInfo(_StudentLabel, _AddressLabel, _MidtermLabel, _FinalLabel, _HW1Label, _HW2Label, _HW3Label);
 }
 
 - (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
@@ -366,6 +317,7 @@ void saveStudentInfo(UITextField *StudentLabel, UITextField *AddressLabel, UITex
 }
 
 - (IBAction)SegmentControl:(UISegmentedControl *)sender {
+    saveStudentInfo(_StudentLabel, _AddressLabel, _MidtermLabel, _FinalLabel, _HW1Label, _HW2Label, _HW3Label);
     switch (sender.selectedSegmentIndex) {
         case 0:
             break;
